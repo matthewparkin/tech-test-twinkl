@@ -14,12 +14,12 @@ We don't expect you to spend longer than 3 hours on this task. If you'd like to 
 
 ##### Fetch and display posts
 
-- [ ] Implement a component that fetches the list of posts from https://jsonplaceholder.typicode.com/posts.
-- [ ] Display all fetched posts in a list.
+- [x] Implement a component that fetches the list of posts from https://jsonplaceholder.typicode.com/posts.
+- [x] Display all fetched posts in a list.
 
 ##### Search posts
 
-- [ ] Implement a search bar that allows a user to search for posts by title and display only the desired posts. The search should be triggered on change.
+- [x] Implement a search bar that allows a user to search for posts by title and display only the desired posts. The search should be triggered on change.
 
 ##### Delete post
 

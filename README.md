@@ -6,43 +6,72 @@ You are tasked with creating a React application that interacts with a Posts API
 
 Refer to the [guide on how to use the JSONPlaceholder API](https://jsonplaceholder.typicode.com/guide/).
 
-#### Time limit
+### Time limit
 
 We don't expect you to spend longer than 3 hours on this task. If you'd like to capture any decisions, thoughts, or next steps you would take, feel free to do so.
 
-#### Requirements
+### Requirements
 
-##### Fetch and display posts
+#### Fetch and display posts
 
 - [x] Implement a component that fetches the list of posts from https://jsonplaceholder.typicode.com/posts.
 - [x] Display all fetched posts in a list.
 
-##### Search posts
+I could have probably broken the main post page down further, defo would have benefitted from this in testing, ended up with a lot of state and functions in one component, but ran out of time to fix it.
+
+#### Search posts
 
 - [x] Implement a search bar that allows a user to search for posts by title and display only the desired posts. The search should be triggered on change.
 
-For improvments could we do a button that goes and fetches the posts on search or uses the previous call (this could become out of date. Do we want to do it on key up and key down) do we want to keep it in memory (local storage).
+For now I have implemented a search bar that filters the posts, but it does not make a new API call on every rerender only on mount. Instead, it filters the posts that have already been fetched and stores in memory. I did this to avoid unnecessary API calls and to improve performance. I have also added a debounce hook to prevent over rendering on every keystroke.
 
-##### Delete post
+For improvements, we could add a button to fetch posts based on the search query or reuse the previous API call (though this might result in outdated data). Alternatively, we could trigger the search on key up or key down events. Another consideration is whether we want to persist the data in memory (e.g., using local storage) to improve performance and reduce API calls.
 
-- [ ] For each post in the list, provide a "Remove" button.
-- [ ] Implement the functionality to delete a post when the "Remove" button is clicked.
+#### Delete post
 
-tick boxes (delete all, delete one or selected, could do this all in one call and make it agnostic)
+- [x] For each post in the list, provide a "Remove" button.
+- [x] Implement the functionality to delete a post when the "Remove" button is clicked.
 
-##### Testing
+This is out of scope (and I'm running out of time) but I could add functionality for managing posts with tick boxes:
+- Allow users to delete all posts, delete a single post, or delete selected posts. Wont work for this api but in production we could ask the team building it to allow a single API call to make the functionality more efficient and agnostic.
 
-- [ ] Write sufficient tests to satisfy a production-ready application.
+#### Testing
+
+- [x] Write sufficient tests to satisfy a production-ready application.
 
 unit test - jest 
-could use super test https://www.npmjs.com/package/supertest to test the API calls and improve the coverage on testing the api.
+I used jest to test the components and the api calls.
 
-##### Documentation
+Admittedly I was running out of time when it came to the unit tests after spending a bit too much time cleaning up state and the functions. I'd have liked to use more data-qa/data-testids where needed to make the tests more robust and easier to maintain, but in some cases I have just gone for finding by the text which could result in brittle tests, failing when someone wants to change a components content but the function would remain the same. 
 
-- [ ] Add appropriate documentation for your application.
+Ideally I would like to set up more automated tests through playwright or selenium. This would allow for end to end testing of the application and ensure that the application is working as expected.
 
-I could, if given time add api documentation to enable easier production ready adoption. I've seen good reviews on swagger ui https://www.npmjs.com/package/swagger-ui. Which could help (might be overkill for this task).
+In a production ready environment I would also look to set up a CI/CD pipeline to ensure that the application is tested and deployed automatically. Potentially using husky commit hooks on push to avoid committing code that does not pass the tests (personal prefference).
 
+In order to help test end to end something like SuperTest (https://www.npmjs.com/package/supertest) could be used to test API calls are working as expected.
+
+#### Documentation
+
+- [x] Add appropriate documentation for your application.
+
+Given more time, I could add API documentation to aid easier production-ready adoption. I've seen positive reviews on tools like Swagger UI (https://www.npmjs.com/package/swagger-ui). Could be a great choice for this purpose, although it might be overkill for this specific task.
+
+I've got in a good habbit recently of adding confluence pages to make HLD's and draw Io diagrams to help other developers understand the flow of apps. Could be something to add in the future. 
+
+
+
+#### Further improvements
+- **Dependency Security**: Tools like Snyk can be used to check for security vulnerabilities in dependencies. I've used Snyk in the past, and it has been helpful in identifying issues and reducing duplication.
+
+- **Runbooks**: Implementing runbooks for common operational tasks can improve efficiency and reliability.
+
+- **Secrets Management**: For storing secrets (e.g., app configuration), a tool like Vault would typically be used. While app configuration is sufficient for now, Vault provides a more secure and scalable solution.
+
+- **Geolocation and Routing**: Services like Akamai or geolocation-based routing could be used to direct users to the closest server or restrict access to specific regions where the application is needed.
+
+- **Monitoring and Alerting**: Tools like Grafana can be used to monitor logs and set up alerts. Additionally, New Relic could provide detailed insights into application performance.
+
+- **Single Sign-On (SSO)**: Ensure users have the correct credentials to access the application. This is especially important when dealing with sensitive data, such as private information (even more so with twinkle). Proper authentication and authorization should be considered for future development.
 
 #### Wireframes
 
@@ -69,37 +98,37 @@ No styling / CSS libraries are included by default - feel free to add your own u
 
 You are free to introduce additional libraries or tools as you see fit.
 
-### Prerequisites
+## Prerequisites
 
 - Node.js: Ensure you have Node.js version 20 or higher installed.
 
-### Installation
+## Installation
 
-#### Clone the repository
+### Clone the repository
 
 ```
-git clone https://github.com/twinkltech/twinkl-react-tech-test.git
+git clone https://github.com/twinkltech/twinkl-react-tech-test.git - update with my repo
 ```
 
 ```
 cd twinkl-react-tech-test
 ```
 
-#### Using Node Version Manager (nvm)
+### Using Node Version Manager (nvm)
 
 ```bash
 nvm install && nvm use
 ```
 
-#### Install dependencies
+### Install dependencies
 
 ```
 yarn
 ```
 
-### Scripts
+## Scripts
 
-#### Development server
+### Development server
 
 Start the development server:
 
@@ -107,7 +136,7 @@ Start the development server:
 yarn dev
 ```
 
-#### Lint (ESLint)
+### Lint (ESLint)
 
 Check for linting issues:
 
@@ -121,7 +150,7 @@ Fix lint issues in the codebase:
 yarn lint:fix
 ```
 
-#### Format (Prettier)
+### Format (Prettier)
 
 Check for formatting issues:
 
@@ -135,7 +164,7 @@ Fix formatting issues:
 yarn format:write
 ```
 
-#### Testing (Vitest)
+### Testing (jest)
 
 Run the test suite with:
 
@@ -143,13 +172,10 @@ Run the test suite with:
 yarn test
 ```
 
+### Coverage report:
 
-#### Security and general improvements
-Could use something like SNYK to check for security issues in the dependencies.
-I've used this previously and has helped to identify issues in the dependencies and reduce duplication.
-Runbooks 
-vault storing secrets. app confic for now, but would usually use vault.
-Could use akamai or geolocation to route the user to the closest server or lock the application down to the region its needed for.
-log lines - monitoring and alerting. Could use something like graphana. 
-Could use new relic to monitor the application and get insights into the performance in a bit more detail.
-SSO Id - do they have the right credentials to be accessing this application. Could defo be an issue with this api call. Should be considered going forward. Especially where children and private data is involved.
+```
+yarn test:coverage
+```
+
+

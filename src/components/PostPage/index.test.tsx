@@ -91,7 +91,7 @@ describe("PostPage Component", () => {
             expect(getByTestId("post-2")).toBeInTheDocument();
         });
 
-        const searchInput = getByPlaceholderText("Search posts by title...");
+        const searchInput = getByPlaceholderText("Search...");
         fireEvent.change(searchInput, { target: { value: "Post 1" } });
 
         await waitFor(() => {

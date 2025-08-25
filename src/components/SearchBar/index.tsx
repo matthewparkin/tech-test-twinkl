@@ -1,4 +1,5 @@
 import React from "react";
+import "./index.scss";
 
 interface Props {
     searchQuery: string;
@@ -7,12 +8,15 @@ interface Props {
 
 const SearchBar: React.FC<Props> = ({ searchQuery, setSearchQuery }) => {
     return (
-        <input
-            type="text"
-            placeholder="Search posts by title..."
-            value={searchQuery}
-            onChange={(event) => setSearchQuery(event.target.value)}
-        />
+        <div className="search-bar-container">
+            <input
+                id="search-bar"
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+            />
+        </div>
     );
 };
 

@@ -1,13 +1,15 @@
 import { render, fireEvent } from "@testing-library/react";
 import SearchBar from ".";
 
+import "./index.scss";
+
 describe("SearchBar Component", () => {
     test("renders the search input with the correct placeholder", () => {
         const { getByPlaceholderText } = render(
             <SearchBar searchQuery="" setSearchQuery={jest.fn()} />
         );
 
-        const inputElement = getByPlaceholderText(/search posts by title/i);
+        const inputElement = getByPlaceholderText(/search/i);
         expect(inputElement).toBeInTheDocument();
     });
 
@@ -26,7 +28,7 @@ describe("SearchBar Component", () => {
             <SearchBar searchQuery="" setSearchQuery={setSearchQueryMock} />
         );
 
-        const inputElement = getByPlaceholderText(/search posts by title/i);
+        const inputElement = getByPlaceholderText(/search/i);
         fireEvent.change(inputElement, { target: { value: "new query" } });
 
         expect(setSearchQueryMock).toHaveBeenCalledWith("new query");

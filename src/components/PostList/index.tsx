@@ -1,11 +1,6 @@
-import React from 'react';
-import PostItem from './PostItem';
-
-interface Post {
-    id: number;
-    title: string;
-    body: string;
-}
+import React from "react";
+import PostItem from "../PostItem";
+import { Post } from "@/types";
 
 interface Props {
     posts: Post[];

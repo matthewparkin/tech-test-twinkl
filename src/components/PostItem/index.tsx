@@ -1,10 +1,5 @@
-import React from 'react';
-
-interface Post {
-    id: number;
-    title: string;
-    body: string;
-}
+import { Post } from "@/types";
+import React from "react";
 
 interface Props {
     post: Post;
@@ -14,10 +9,10 @@ interface Props {
 const PostItem: React.FC<Props> = ({ post, onRemovePost }) => {
     // console.log("Rendering PostItem with posst:", post);
     return (
-        <li>
+        <li data-testid={`post-${post.id}`}>
             <h3>{post.title}</h3>
             <p>{post.body}</p>
-            <button onClick={() => onRemovePost(post.id)}>Remove</button>
+            <button data-testid={`remove-post-${post.id}`} onClick={() => onRemovePost(post.id)}>Remove</button>
         </li>
     );
 };

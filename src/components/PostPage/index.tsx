@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ErrorMessage from "../ErrorMessage";
 import LoadingScreen from "../LoadingScreen";
 import NoPosts from "../NoPosts";
 import PostList from "../PostList";
 import SearchBar from "../SearchBar";
-import { useDebounce } from "../utils";
 import { API_URL } from "../../constants/config";
 import { Post } from "@/types";
+import { useDebounce } from "../utils/useDebounce";
 
 const PostPage = () => {
     // can group up on the state some dont need to be independent
@@ -17,7 +17,7 @@ const PostPage = () => {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
-    // Could potentially use memo here but for now this isn"t heavy so i"ll leave it until it bcomes heavy
+    // Could potentially memoize here but for now this isn"t heavy so i"ll leave it until it bcomes heavy
     useEffect(() => {
         const fetchPosts = async () => {
             try {
@@ -54,13 +54,21 @@ const PostPage = () => {
         fetchPosts();
     }, []);
 
+    const filterPosts = useCallback(
+        (query: string, posts: Post[]): Post[] => {
+            // Simple filtering logic using the debounce
+            return posts.filter((post) =>
+                post.title.toLowerCase().includes(query.toLowerCase())
+            );
+        },
+        []
+    );
+
     useEffect(() => {
-        // Simple filtering logic using the debounce
-        const filtered = posts.filter((post) =>
-            post.title.toLowerCase().includes(debouncedSearchQuery.toLowerCase())
-        );
+        const filtered = filterPosts(debouncedSearchQuery, posts);
         setFilteredPosts(filtered);
-    }, [debouncedSearchQuery, posts]);
+    }, [debouncedSearchQuery, posts, filterPosts]);
+
 
     const handleRemovePost = async (id: number) => {
         try {
@@ -71,6 +79,10 @@ const PostPage = () => {
             if (!response.ok) {
                 throw new Error("Failed to delete the post");
             }
+
+            // doesn't really delete from server (as is a dummy api) but in the real world it would be 
+            // good to do a GET around this point to check we have the most uptodate if we are expecting 
+            // things to change, could be stale as we are storing in state not from the api
 
             const updatedPosts = posts.filter((post) => post.id !== id);
             setPosts(updatedPosts);
@@ -107,7 +119,6 @@ const PostPage = () => {
 
     return (
         <div>
-            <h2>Posts</h2>
             <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
             {handleRenderPosts()}
         </div>

@@ -1,0 +1,13 @@
+// Variables stored centerally so I can access them from all components and reduce duplication
+$font-family: 'Inter', sans-serif;
+$color-primary: #007bff;
+$color-primary-hover: #0056b3;
+$color-primary-active: #004494;
+$color-primary-focus: #3399ff;
+$color-light: #f9f9f9;
+$color-dark: #333;
+$color-dark-muted: #222;
+$color-border: #ddd;
+$color-shadow: rgba(0, 0, 0, 0.1);
+$color-shadow-hover: rgba(0, 0, 0, 0.15);
+$transition-speed: 0.3s;
